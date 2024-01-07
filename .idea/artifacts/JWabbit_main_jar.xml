@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JWabbit.main:jar">
+    <output-path>$PROJECT_DIR$/out/libs</output-path>
+    <root id="archive" name="JWabbit.main.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/build/libs/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="JWabbit.main" />
+    </root>
+  </artifact>
+</component>

@@ -1,5 +1,6 @@
+
 plugins {
-    id("java")
+    id("java-library")
 }
 
 sourceSets {
@@ -9,17 +10,15 @@ sourceSets {
 }
 
 group = "jwabbit"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.compileJava {
+    options.javaModuleVersion = provider { "1.0" }
 }
