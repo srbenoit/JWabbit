@@ -315,55 +315,57 @@ public final class CalculatorPanel extends LoggedPanel implements Runnable, KeyL
             g.drawString(str, 5, 5 + (int) bounds.getMaxY());
         } else if (this.showing) {
             final Rectangle bounds = this.calcUi.getRectSkin();
-            final BufferedImage offscreen = new BufferedImage(bounds.width, bounds.height, BufferedImage.TYPE_INT_ARGB);
-            final Graphics grx = offscreen.getGraphics();
+            if (bounds.width > 0 && bounds.height > 0) {
+                final BufferedImage offscreen = new BufferedImage(bounds.width, bounds.height, BufferedImage.TYPE_INT_ARGB);
+                final Graphics grx = offscreen.getGraphics();
 
-            BufferedImage skin = this.calcUi.getRenderedSkin();
-            if (skin == null) {
-                skin = this.calcUi.getSkin();
-            }
-
-            if (skin == null) {
-                renderLCD(grx, true);
-            } else {
-                grx.drawImage(skin, bounds.x, bounds.y, bounds.width, bounds.height, null);
-                final Rectangle rect = getBounds();
-                if (rect.width < bounds.width || rect.height < bounds.height) {
-                    setPreferredSize(new Dimension(bounds.width, bounds.height));
-                    invalidate();
-                    if (this.calcUi.getMainFrame() != null) {
-                        this.calcUi.getMainFrame().pack();
-                    }
+                BufferedImage skin = this.calcUi.getRenderedSkin();
+                if (skin == null) {
+                    skin = this.calcUi.getSkin();
                 }
-                renderLCD(grx, false);
 
-                // Darken any disabled keys
-                final Calc calc = Launcher.getCalc(this.calcUi.getSlot());
-                final String[] disabled = calc.getDisabledKeys();
-                if (disabled != null) {
-                    final KeyName[] names = switch (this.calcUi.getModel()) {
-                        case TI_83P, TI_83PSE, TI_84P, TI_84PSE, TI_84PCSE -> KeyNames.KEY_NAMES_83P_83PSE_84PSE;
-                        default -> ZERO_LEN_KEYNAME_ARR;
-                    };
+                if (skin == null) {
+                    renderLCD(grx, true);
+                } else {
+                    grx.drawImage(skin, bounds.x, bounds.y, bounds.width, bounds.height, null);
+                    final Rectangle rect = getBounds();
+                    if (rect.width < bounds.width || rect.height < bounds.height) {
+                        setPreferredSize(new Dimension(bounds.width, bounds.height));
+                        invalidate();
+                        if (this.calcUi.getMainFrame() != null) {
+                            this.calcUi.getMainFrame().pack();
+                        }
+                    }
+                    renderLCD(grx, false);
 
-                    final EnumKeypadState state = CalcState.getKeypadState(calc);
-                    for (final String s : disabled) {
-                        for (final KeyName name : names) {
-                            if (name.getState() == state && name.getName().equals(s)) {
-                                // Render overlay twice to darken more than just pressed key
-                                renderKeyOverlay(grx, name.getGroup(), name.getBit());
-                                renderKeyOverlay(grx, name.getGroup(), name.getBit());
+                    // Darken any disabled keys
+                    final Calc calc = Launcher.getCalc(this.calcUi.getSlot());
+                    final String[] disabled = calc.getDisabledKeys();
+                    if (disabled != null) {
+                        final KeyName[] names = switch (this.calcUi.getModel()) {
+                            case TI_83P, TI_83PSE, TI_84P, TI_84PSE, TI_84PCSE -> KeyNames.KEY_NAMES_83P_83PSE_84PSE;
+                            default -> ZERO_LEN_KEYNAME_ARR;
+                        };
+
+                        final EnumKeypadState state = CalcState.getKeypadState(calc);
+                        for (final String s : disabled) {
+                            for (final KeyName name : names) {
+                                if (name.getState() == state && name.getName().equals(s)) {
+                                    // Render overlay twice to darken more than just pressed key
+                                    renderKeyOverlay(grx, name.getGroup(), name.getBit());
+                                    renderKeyOverlay(grx, name.getGroup(), name.getBit());
+                                }
                             }
                         }
                     }
+
+                    if (this.pressedGroup != -1) {
+                        renderKeyOverlay(grx, this.pressedGroup, this.pressedBit);
+                    }
                 }
 
-                if (this.pressedGroup != -1) {
-                    renderKeyOverlay(grx, this.pressedGroup, this.pressedBit);
-                }
+                g.drawImage(offscreen, 0, 0, null);
             }
-
-            g.drawImage(offscreen, 0, 0, null);
         }
     }
 

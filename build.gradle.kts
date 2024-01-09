@@ -1,6 +1,7 @@
+import groovy.xml.dom.DOMCategory.attributes
 
 plugins {
-    id("java-library")
+    `java-library`
 }
 
 sourceSets {
@@ -21,4 +22,9 @@ dependencies {
 
 tasks.compileJava {
     options.javaModuleVersion = provider { "1.0" }
+}
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "jwabbit.Launcher"
+    }
 }

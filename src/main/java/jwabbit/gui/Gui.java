@@ -157,7 +157,9 @@ public final class Gui {
         }
 
         if (!loadedRom) {
-            calc.setRomPath(Registry.asString(Registry.queryWabbitKey("rom_path")));
+            final String registryPath = Registry.asString(Registry.queryWabbitKey("rom_path"));
+            LoggedObject.LOG.info("ROM path is ", registryPath);
+            calc.setRomPath(registryPath);
             final String romPath = calc.getRomPath();
             LoggedObject.LOG.info("Loading ROM: ", romPath);
             loadedRom = calc.romLoad(romPath);
@@ -222,6 +224,6 @@ public final class Gui {
      */
     static BufferedImage loadSkin(final String name) {
 
-        return FileLoader.loadFileAsImage(Gui.class, name, true);
+        return FileLoader.loadFileAsImage(Gui.class, "skins/" + name, true);
     }
 }
