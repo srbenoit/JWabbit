@@ -23,6 +23,7 @@ import jwabbit.iface.Calc;
 import jwabbit.iface.CalcState;
 import jwabbit.iface.EnumKeypadState;
 import jwabbit.iface.Globals;
+import jwabbit.log.LoggedObject;
 import jwabbit.log.LoggedThread;
 
 import javax.swing.SwingUtilities;
@@ -110,6 +111,7 @@ public final class CalcThread extends LoggedThread {
 
         // Request an initial dump of the LCD since it will not necessarily update right away.
         this.actions.addLast(new CalcBasicAction(ECalcAction.UPDATE_LCD));
+        this.actions.addLast(new CalcBasicAction(ECalcAction.SET_SPEED_200));
     }
 
     /**
@@ -543,7 +545,6 @@ public final class CalcThread extends LoggedThread {
 
             case KEY_KEYPRESSED:
                 final CalcKeyKeyPressAction keypress = (CalcKeyKeyPressAction) action;
-
                 this.calc.getCPU().getPIOContext().getKeypad().keypadKeyPress(this.calc,
                         keypress.getVk(), keypress.getLoc(), null);
                 break;

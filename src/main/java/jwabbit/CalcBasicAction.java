@@ -25,8 +25,7 @@ public class CalcBasicAction implements ICalcAction {
         if (theType == ECalcAction.KEY_PRESSED || theType == ECalcAction.KEY_RELEASED
                 || theType == ECalcAction.KEY_KEYPRESSED || theType == ECalcAction.KEY_KEYRELEASED
                 || theType == ECalcAction.STEP_N) {
-            throw new IllegalArgumentException(
-                    "Invalid action for a basic action object: " + theType.name());
+            throw new IllegalArgumentException("Invalid action for a basic action object: " + theType.name());
         }
 
         this.type = theType;

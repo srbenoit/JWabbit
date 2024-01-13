@@ -59,4 +59,10 @@ public class CalcKeyKeyPressAction implements ICalcAction {
 
         return this.loc;
     }
+
+    @Override
+    public String toString() {
+
+        return "CalcKeyKeyPressAction{vk=" + this.vk + ", loc=" + this.loc + "}";
+    }
 }

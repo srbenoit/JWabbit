@@ -710,7 +710,7 @@ public final class CalcUI extends WindowAdapter implements ComponentListener, IL
     private void refresh() {
 
         if (this.skinEnabled) {
-            LoggedObject.LOG.info("Skin is enabled, customSkin is " + this.customSkin);
+//            LoggedObject.LOG.info("Skin is enabled, customSkin is " + this.customSkin);
 
             final String skinRes;
             final String maskRes;
