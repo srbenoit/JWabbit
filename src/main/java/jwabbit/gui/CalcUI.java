@@ -710,6 +710,7 @@ public final class CalcUI extends WindowAdapter implements ComponentListener, IL
     private void refresh() {
 
         if (this.skinEnabled) {
+            LoggedObject.LOG.info("Skin is enabled, customSkin is " + this.customSkin);
 
             final String skinRes;
             final String maskRes;
@@ -958,9 +959,9 @@ public final class CalcUI extends WindowAdapter implements ComponentListener, IL
             this.skinScale = 0.25;
         }
 
-        // LOG.info("Scale = " + this.skinScale + " width = "
-        // + (this.skinImage.getWidth() * this.skinScale) + " height = "
-        // + (this.skinImage.getHeight() * this.skinScale));
+//         LoggedObject.LOG.info("Scale = " + this.skinScale + " width = "
+//                 + (this.skinImage.getWidth() * this.skinScale) + " height = "
+//                 + (this.skinImage.getHeight() * this.skinScale));
 
         // Apply the face color as background anywhere the skin has nonzero alpha
         final Color faceColor;
@@ -1003,6 +1004,8 @@ public final class CalcUI extends WindowAdapter implements ComponentListener, IL
                 if (this.skinMask != null) {
                     final int faceRgb = faceColor.getRGB();
 
+//                    LoggedObject.LOG.info("faceRgb color is 0x", Integer.toHexString(faceRgb));
+
                     // Find the average alpha of the original skin...
                     long total = 0L;
                     int count = 0;
@@ -1012,15 +1015,16 @@ public final class CalcUI extends WindowAdapter implements ComponentListener, IL
                                     y * this.skinMask.getHeight() / newHeight);
 
                             if (argb == 0xFFFFFFFF) {
-                                total = total + (long) (this.skinImage.getRGB(x * skinWidth / newWidth,
-                                        y * skinHeight / newHeight) >> 24) & 0x00FFL;
+                                total = total + ((long) (this.skinImage.getRGB(x * skinWidth / newWidth,
+                                        y * skinHeight / newHeight) >> 24) & 0x00FFL);
                                 ++count;
                             }
                         }
                     }
                     final int average = (int) (total / (long) count);
 
-                    // LOG.info("Average alpha = " + average);
+//                    LoggedObject.LOG.info("Total alpha is " + total + ", count is " + count
+//                            + " average alpha = " + average);
 
                     for (int x = 0; x < newWidth; ++x) {
                         for (int y = 0; y < newHeight; ++y) {
@@ -1037,6 +1041,7 @@ public final class CalcUI extends WindowAdapter implements ComponentListener, IL
                         }
                     }
                 }
+
 
                 Graphics2D g2d = (Graphics2D) this.renderedSkinImage.getGraphics();
                 g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
