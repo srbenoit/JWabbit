@@ -21,8 +21,3 @@ dependencies {
 tasks.compileJava {
     options.javaModuleVersion = provider { "1.0" }
 }
-tasks.jar {
-    manifest {
-        attributes["Main-Class"] = "jwabbit.Launcher"
-    }
-}
