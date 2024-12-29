@@ -1,4 +1,4 @@
-# JjWabbit 
+# JWabbit 
 
 This is a Java port of the "Wabbitemu" TI calculator emulator.  It does not implement all the features in wabbitemu, but functions as a working calculator.
 
