@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="jwabbit">
-    <output-path>$PROJECT_DIR$/out/libs/jwabbit_jar</output-path>
+    <output-path>$PROJECT_DIR$/out/libs</output-path>
     <root id="archive" name="jwabbit.jar">
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/res/MANIFEST.MF" />
